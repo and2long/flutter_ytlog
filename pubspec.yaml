@@ -1,0 +1,19 @@
+name: log_util
+description: "Log Util for Flutter"
+version: 0.0.1
+homepage: https://github.com/and2long/log_util_flutter
+
+environment:
+  sdk: ^3.5.4
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  intl: ^0.19.0
+  path_provider: ^2.1.5
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+
+flutter:
