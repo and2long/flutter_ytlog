@@ -1,7 +1,7 @@
-name: log_util
+name: flutter_ytlog
 description: "Log Util for Flutter"
 version: 0.0.1
-homepage: https://github.com/and2long/log_util_flutter
+homepage: https://github.com/and2long/flutter_ytlog
 
 environment:
   sdk: ^3.5.4
