@@ -16,6 +16,8 @@ A logging utility class that supports color-coded logs in the terminal and enabl
 ## Usage
 
 ```dart
+import 'package:flutter_ytlog/log.dart';
+
 Log.d('TAG', 'Hello World');
 Log.i('TAG', 'Hello World');
 Log.w('TAG', 'Hello World');
