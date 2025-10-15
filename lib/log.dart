@@ -92,8 +92,11 @@ class Log {
 
   static Future<File> getLogFile() async {
     final Directory tempDir = await getLogDir();
-    File file = File(
+    final file = File(
         '${tempDir.path}/${DateFormat('yyyyMMdd').format(DateTime.now())}.log');
+    if (!await file.exists()) {
+      await file.create();
+    }
     return file;
   }
 
