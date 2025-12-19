@@ -1,6 +1,7 @@
 name: flutter_ytlog_example
 description: Example app for flutter_ytlog.
 publish_to: "none"
+version: 1.0.0+1
 
 environment:
   sdk: ^3.5.4
