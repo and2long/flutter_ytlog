@@ -1,3 +1,6 @@
+## 0.0.8
+- All use the debugPrint method for logging
+
 ## 0.0.7
 - add log queuing and flushing mechanism
 
