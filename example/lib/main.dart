@@ -48,11 +48,23 @@ class _LogDemoPageState extends State<LogDemoPage> {
     setState(() => _status = 'Logged 4 lines');
   }
 
-  void _logBurst() {
-    for (var i = 0; i < 200; i++) {
-      Log.d('BURST', 'line=$i');
+  Future<void> _logBurst() async {
+    // Intentionally alternates short/long messages so you can visually verify
+    // whether the console output ordering stays correct when long logs are
+    // chunked by the underlying platform.
+    const pairs = 10;
+    const longChars = 500;
+    final longPayload = List.filled(longChars, 'A').join();
+
+    setState(() => _status = 'Logging $pairs short/long pairs...');
+
+    for (var i = 0; i < pairs; i++) {
+      Log.d('BURST', 'S[$i] short');
+      Log.i('BURST', 'L[$i] long start: $longPayload');
     }
-    setState(() => _status = 'Queued 200 debug lines');
+
+    await Log.flush();
+    setState(() => _status = 'Flushed $pairs short/long pairs');
   }
 
   Future<void> _flush() async {
@@ -89,7 +101,7 @@ class _LogDemoPageState extends State<LogDemoPage> {
             const SizedBox(height: 8),
             FilledButton(
               onPressed: _logBurst,
-              child: const Text('Log Burst (200 lines)'),
+              child: const Text('Log Burst (short/long)'),
             ),
             const SizedBox(height: 8),
             FilledButton(

@@ -23,11 +23,7 @@ class Log {
 
   @visibleForTesting
   static void Function(String message) printer = (message) {
-    if (Platform.isAndroid) {
-      debugPrintSynchronously(message);
-    } else {
-      log(message);
-    }
+    debugPrint(message);
   };
 
   /// Formats an ISO-8601-like local timestamp like `2024-05-30T14:30:00.000+08:00`.
@@ -104,7 +100,12 @@ class Log {
     }
     String logStr = '[${level.name}] [$tag] : $content';
     final datetimeStr = formatDateTimeWithTimeZone(createdAt);
-    String printStr = '$start$datetimeStr $logStr$end';
+    String printStr;
+    if (Platform.isAndroid) {
+      printStr = '$start$datetimeStr $logStr$end';
+    } else {
+      printStr = '$datetimeStr $logStr';
+    }
     final fileStr = '> $datetimeStr $logStr';
 
     _enqueue(() async {
