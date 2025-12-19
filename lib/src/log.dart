@@ -11,6 +11,17 @@ class Log {
   static bool _logEnabled = true;
   static bool _writeToFile = false;
 
+  /// Formats a timestamp like `2025-12-19 10:11:12.123 +08:00`.
+  static String formatDateTimeWithTimeZone(DateTime dateTime) {
+    final formatted = DateFormat('yyyy-MM-dd HH:mm:ss.SSS').format(dateTime);
+    final offset = dateTime.timeZoneOffset;
+    final sign = offset.isNegative ? '-' : '+';
+    final hours = offset.inHours.abs().toString().padLeft(2, '0');
+    final minutes =
+        (offset.inMinutes.abs() % 60).toString().padLeft(2, '0');
+    return '$formatted $sign$hours:$minutes';
+  }
+
   static Future<void> init({
     bool enable = true,
     bool writeToFile = false,
@@ -60,7 +71,7 @@ class Log {
         start = red;
     }
     String logStr = '[${level.name}] [$tag] : $content';
-    String datetimeStr = '${DateTime.now()} ';
+    final datetimeStr = '${formatDateTimeWithTimeZone(DateTime.now())} ';
     String printStr = '$start$datetimeStr$logStr$end';
     if (Platform.isIOS) {
       /// Color codes in error messages are probably escaped when using the iOS simulator
@@ -70,7 +81,7 @@ class Log {
       debugPrint(printStr);
     }
     if (_writeToFile) {
-      outputToFile('> ${DateTime.now()} $logStr');
+      outputToFile('> ${formatDateTimeWithTimeZone(DateTime.now())} $logStr');
     }
   }
 
