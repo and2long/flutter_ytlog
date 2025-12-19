@@ -25,14 +25,14 @@ class Log {
     }
   };
 
-  /// Formats a timestamp like `2025-12-19 10:11:12.123 +08:00`.
+  /// Formats an ISO-8601-like local timestamp like `2024-05-30T14:30:00.000+08:00`.
   static String formatDateTimeWithTimeZone(DateTime dateTime) {
-    final formatted = DateFormat('yyyy-MM-dd HH:mm:ss.SSS').format(dateTime);
+    final formatted = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(dateTime);
     final offset = dateTime.timeZoneOffset;
     final sign = offset.isNegative ? '-' : '+';
     final hours = offset.inHours.abs().toString().padLeft(2, '0');
     final minutes = (offset.inMinutes.abs() % 60).toString().padLeft(2, '0');
-    return '$formatted $sign$hours:$minutes';
+    return '$formatted$sign$hours:$minutes';
   }
 
   static Future<void> init({

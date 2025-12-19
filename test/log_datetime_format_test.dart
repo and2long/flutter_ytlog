@@ -8,7 +8,7 @@ void main() {
     final sign = offset.isNegative ? '-' : '+';
     final hours = offset.inHours.abs().toString().padLeft(2, '0');
     final minutes = (offset.inMinutes.abs() % 60).toString().padLeft(2, '0');
-    final expected = '2024-01-02 03:04:05.006 $sign$hours:$minutes';
+    final expected = '2024-01-02T03:04:05.006$sign$hours:$minutes';
     expect(Log.formatDateTimeWithTimeZone(dt), expected);
   });
 }
