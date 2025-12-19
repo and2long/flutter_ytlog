@@ -1,3 +1,6 @@
+## 0.0.5
+- improve timestamp formatting with timezone support
+
 ## 0.0.4
 - Check if log file exists, automatically create if not exists
 

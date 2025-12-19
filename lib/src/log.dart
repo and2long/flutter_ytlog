@@ -11,14 +11,27 @@ class Log {
   static bool _logEnabled = true;
   static bool _writeToFile = false;
 
+  @visibleForTesting
+  static DateTime Function() now = DateTime.now;
+
+  @visibleForTesting
+  static void Function(String message) printer = (message) {
+    if (Platform.isIOS) {
+      /// Color codes in error messages are probably escaped when using the iOS simulator
+      /// https://github.com/flutter/flutter/issues/20663
+      log(message);
+    } else {
+      debugPrint(message);
+    }
+  };
+
   /// Formats a timestamp like `2025-12-19 10:11:12.123 +08:00`.
   static String formatDateTimeWithTimeZone(DateTime dateTime) {
     final formatted = DateFormat('yyyy-MM-dd HH:mm:ss.SSS').format(dateTime);
     final offset = dateTime.timeZoneOffset;
     final sign = offset.isNegative ? '-' : '+';
     final hours = offset.inHours.abs().toString().padLeft(2, '0');
-    final minutes =
-        (offset.inMinutes.abs() % 60).toString().padLeft(2, '0');
+    final minutes = (offset.inMinutes.abs() % 60).toString().padLeft(2, '0');
     return '$formatted $sign$hours:$minutes';
   }
 
@@ -71,21 +84,15 @@ class Log {
         start = red;
     }
     String logStr = '[${level.name}] [$tag] : $content';
-    final datetimeStr = '${formatDateTimeWithTimeZone(DateTime.now())} ';
+    final datetimeStr = '${formatDateTimeWithTimeZone(now())} ';
     String printStr = '$start$datetimeStr$logStr$end';
-    if (Platform.isIOS) {
-      /// Color codes in error messages are probably escaped when using the iOS simulator
-      /// https://github.com/flutter/flutter/issues/20663
-      log(printStr);
-    } else {
-      debugPrint(printStr);
-    }
+    printer(printStr);
     if (_writeToFile) {
-      outputToFile('> ${formatDateTimeWithTimeZone(DateTime.now())} $logStr');
+      outputToFile('> ${formatDateTimeWithTimeZone(now())} $logStr');
     }
   }
 
-  static outputToFile(String message) async {
+  static void outputToFile(String message) async {
     File logFile = await getLogFile();
     int length = await logFile.length();
     if (length == 0) {
