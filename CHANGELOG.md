@@ -1,3 +1,6 @@
+## 0.0.7
+- add log queuing and flushing mechanism
+
 ## 0.0.6
 - update timestamp format to ISO-8601-like standard
 

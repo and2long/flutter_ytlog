@@ -1,6 +1,6 @@
 name: flutter_ytlog
 description: "Log Util for Flutter"
-version: 0.0.6
+version: 0.0.7
 homepage: https://github.com/and2long/flutter_ytlog
 
 environment:
