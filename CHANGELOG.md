@@ -1,3 +1,6 @@
+## 0.0.6
+- update timestamp format to ISO-8601-like standard
+
 ## 0.0.5
 - improve timestamp formatting with timezone support
 
